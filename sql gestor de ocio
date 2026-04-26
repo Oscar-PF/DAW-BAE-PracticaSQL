@@ -1,0 +1,59 @@
+-- 1. Tipos (Series, Libros, Pelis, Juegos...)
+CREATE TABLE tipos (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL UNIQUE
+);
+
+-- 2. El catálogo de lo que tengo o quiero
+CREATE TABLE obras (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    autor VARCHAR(255), -- Autor, Director o Estudio
+    publicacion INT,
+    tipo_id INT,
+    CONSTRAINT fk_tipo 
+        FOREIGN KEY (tipo_id) 
+        REFERENCES tipos(id) 
+        ON DELETE RESTRICT
+);
+
+-- 3. Mi progreso personal
+CREATE TABLE registros (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    estado VARCHAR(255) DEFAULT 'Iniciado',
+    iniciado DATE NOT NULL,
+    nota INT CHECK (nota >= 0 AND nota <= 10),
+    finalizado DATE,
+    obra_id INT NOT NULL,
+    CONSTRAINT fk_obra 
+        FOREIGN KEY (obra_id) 
+        REFERENCES obras(id) 
+        ON DELETE CASCADE, -- Si borro la obra del catálogo, se borra mi progreso
+    CONSTRAINT check_estado 
+        CHECK (estado IN ('Iniciado', 'Terminado', 'Abandonado'))
+);
+
+
+-- Datos de prueba 
+-- Insertar tipos
+INSERT INTO tipos (nombre) VALUES ('Libro'), ('Videojuego'), ('Serie'), ('Pelicula');
+
+-- Insertar contenidos
+INSERT INTO obras (titulo, autor, publicacion, tipo_id) 
+VALUES ('The Witcher 3', 'CD Projekt Red', 2015, (SELECT id FROM tipos WHERE nombre = 'Videojuego')),
+       ('Dune', 'Frank Herbert', 1965, (SELECT id FROM tipos WHERE nombre = 'Libro')),
+			 ('Lost', 'ABC', 2004, (SELECT id FROM tipos WHERE nombre = 'Serie')),
+			 ('It', 'Warner Bros. Pictures', 2017, (SELECT id FROM tipos WHERE nombre = 'Pelicula')),
+			 ('Interstellar', 'Christopher Nolan', 2014, (SELECT id FROM tipos WHERE nombre = 'Pelicula')),
+       ('The Last of Us Part II', 'Naughty Dog', 2020, (SELECT id FROM tipos WHERE nombre = 'Videojuego')),
+       ('1984', 'George Orwell', 1949, (SELECT id FROM tipos WHERE nombre = 'Libro')),
+       ('Breaking Bad', 'Vince Gilligan', 2008, (SELECT id FROM tipos WHERE nombre = 'Serie'));
+
+-- Insertar registros
+INSERT INTO registros (estado, iniciado, nota, finalizado, obra_id) 
+VALUES ('Terminado', '2015-10-2', 10, '2016-3-25', (SELECT id FROM obras WHERE titulo = 'The Witcher 3')),
+       ('Iniciado', '2025-3-15', NULL, NULL, (SELECT id FROM obras WHERE titulo = 'Dune')),
+			 ('Terminado', '2024-01-10', 9, '2024-02-15', (SELECT id FROM obras WHERE titulo = 'Interstellar')),
+       ('Iniciado', '2025-01-01', NULL, NULL, (SELECT id FROM obras WHERE titulo = 'The Last of Us Part II')),
+       ('Terminado', '2023-05-20', 10, '2023-06-10', (SELECT id FROM obras WHERE titulo = '1984')),
+       ('Abandonado', '2022-11-12', 4, '2022-11-20', (SELECT id FROM obras WHERE titulo = 'Lost'));
