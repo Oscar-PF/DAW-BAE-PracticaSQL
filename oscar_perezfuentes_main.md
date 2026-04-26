@@ -86,16 +86,16 @@ JOIN tipos t ON o.tipo_id = t.id
 ORDER BY t.nombre, o.titulo;
 ```
 **Resultado**:
-         titulo         |         autor         |    tipo    
-------------------------+-----------------------+------------
- 1984                   | George Orwell         | Libro
- Dune                   | Frank Herbert         | Libro
- Interstellar           | Christopher Nolan     | Pelicula
- It                     | Warner Bros. Pictures | Pelicula
- Breaking Bad           | Vince Gilligan        | Serie
- Lost                   | ABC                   | Serie
- The Last of Us Part II | Naughty Dog           | Videojuego
- The Witcher 3          | CD Projekt Red        | Videojuego
+| titulo         |         autor         |    tipo    |
+|------------------------+-----------------------+------------ |
+| 1984                   | George Orwell         | Libro |
+| Dune                   | Frank Herbert         | Libro |
+| Interstellar           | Christopher Nolan     | Pelicula |
+| It                     | Warner Bros. Pictures | Pelicula |
+| Breaking Bad           | Vince Gilligan        | Serie |
+| Lost                   | ABC                   | Serie |
+| The Last of Us Part II | Naughty Dog           | Videojuego |
+| The Witcher 3          | CD Projekt Red        | Videojuego |
 (8 rows)
 
 
@@ -108,11 +108,11 @@ JOIN obras o ON r.obra_id = o.id
 WHERE estado = 'Terminado';
 ```
 **Resultado**:
-    titulo     | dias_empleados 
----------------+----------------
- The Witcher 3 |            175
- Interstellar  |             36
- 1984          |             21
+|titulo     | dias_empleados       |
+|---------------+---------------- |
+| The Witcher 3 |            175 |
+| Interstellar  |             36 |
+| 1984          |             21 |
 (3 rows)
 
 #### Consulta 3: Ranking de mejores autores por nota media
@@ -126,12 +126,12 @@ GROUP BY o.autor
 ORDER BY nota_media DESC;
 ```
 **Resultado**:
-       autor       | nota_media 
--------------------+------------
- George Orwell     |      10.00
- CD Projekt Red    |      10.00
- Christopher Nolan |       9.00
- ABC               |       4.00
+|       autor       | nota_media  |
+|-------------------+------------ |
+| George Orwell     |      10.00 |
+| CD Projekt Red    |      10.00 |
+| Christopher Nolan |       9.00 |
+| ABC               |       4.00 |
 (4 rows)
 
 #### Consulta 4: Cantidad de obras por decada
@@ -146,13 +146,13 @@ GROUP BY decada
 ORDER BY decada ASC;
 ```
 **Resultado**:
- decada | total 
---------+-------
- 1940s  |     1
- 1960s  |     1
- 2000s  |     2
- 2010s  |     3
- 2020s  |     1
+| decada | total  |
+|--------+------- |
+| 1940s  |     1 |
+| 1960s  |     1 |
+| 2000s  |     2 |
+| 2010s  |     3 |
+| 2020s  |     1 |
 (5 rows)
 
 #### Consulta 5: Obras que han sido abandonadas
@@ -165,8 +165,8 @@ WHERE r.estado = 'Abandonado';
 ```
 
 **Resultado**:
- titulo | autor | nota 
---------+-------+------
- Lost   | ABC   |    4
+| titulo | autor | nota  |
+|--------+-------+------ |
+| Lost   | ABC   |    4 |
 (1 row)
 
