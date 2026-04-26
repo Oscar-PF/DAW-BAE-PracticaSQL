@@ -8,7 +8,7 @@ Esta base de datos está diseñada para gestionar un catálogo personal de consu
 * Garantizar la integridad referencial: no se puede borrar un tipo si tiene obras asociadas (`RESTRICT`), pero si se elimina una obra, se borran automáticamente sus registros de progreso (`CASCADE`).
 
 ## 2. Diagrama del Modelo Relacional
-![Diagrama de Base de Datos](./Gestor%20de%20ocio.drawio.svg)
+![Diagrama de Base de Datos](./oscar_perezfuentes.svg)
 
 ## 3. Script de creación y datos de prueba
 
