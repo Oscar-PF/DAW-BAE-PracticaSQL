@@ -79,12 +79,12 @@ VALUES ('Terminado', '2015-10-2', 10, '2016-3-25', (SELECT id FROM obras WHERE t
 
 #### Consulta 1: Listado completo de obras con su categoría
 
-´´´
+```sql
 SELECT o.titulo, o.autor, t.nombre AS tipo 
 FROM obras o 
 JOIN tipos t ON o.tipo_id = t.id 
 ORDER BY t.nombre, o.titulo;
-´´´
+```
 **Resultado**:
          titulo         |         autor         |    tipo    
 ------------------------+-----------------------+------------
@@ -101,12 +101,12 @@ ORDER BY t.nombre, o.titulo;
 
 #### Consulta 2: Tiempo empleado en finalizar las obras
 
-´´´
+```sql
 SELECT o.titulo, (finalizado - iniciado) AS dias_empleados 
 FROM registros r 
 JOIN obras o ON r.obra_id = o.id 
 WHERE estado = 'Terminado';
-´´´
+```
 **Resultado**:
     titulo     | dias_empleados 
 ---------------+----------------
@@ -117,14 +117,14 @@ WHERE estado = 'Terminado';
 
 #### Consulta 3: Ranking de mejores autores por nota media
 
-´´´
+```sql
 SELECT o.autor, ROUND(AVG(r.nota), 2) as nota_media
 FROM obras o
 JOIN registros r ON o.id = r.obra_id
 WHERE r.nota IS NOT NULL
 GROUP BY o.autor
 ORDER BY nota_media DESC;
-´´´
+```
 **Resultado**:
        autor       | nota_media 
 -------------------+------------
@@ -136,7 +136,7 @@ ORDER BY nota_media DESC;
 
 #### Consulta 4: Cantidad de obras por decada
 
-´´´
+```sql
 SELECT 
     (publicacion / 10) * 10 || 's' AS decada,
     COUNT(*) AS total
@@ -144,7 +144,7 @@ FROM obras
 WHERE publicacion IS NOT NULL
 GROUP BY decada
 ORDER BY decada ASC;
-´´´ 
+```
 **Resultado**:
  decada | total 
 --------+-------
@@ -157,12 +157,12 @@ ORDER BY decada ASC;
 
 #### Consulta 5: Obras que han sido abandonadas
 
-´´´
+```sql
 SELECT o.titulo, o.autor, r.nota 
 FROM registros r 
 JOIN obras o ON r.obra_id = o.id 
 WHERE r.estado = 'Abandonado';
-´´´
+```
 
 **Resultado**:
  titulo | autor | nota 
